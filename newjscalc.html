@@ -5,8 +5,8 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-// Create calculator container
+  <script>
+  // Create calculator container
 const calculatorContainer = document.createElement('div');
 calculatorContainer.classList.add('calculator');
 calculatorContainer.style.width = '320px';
@@ -38,7 +38,9 @@ const buttonValues = [
   ['4', '5', '6', '*'],
   ['1', '2', '3', '-'],
   ['0', '.', '=', '+'],
-  ['Clear']
+  ['Clear', '√', 'x^2', 'MR'],
+  ['M+', 'M-', 'MC', 'sin'],
+  ['cos', 'tan', 'x^n']
 ];
 
 // Create buttons
@@ -49,11 +51,12 @@ buttonValues.forEach(rowValues => {
     const button = document.createElement('input');
     button.setAttribute('type', 'button');
     button.setAttribute('value', value);
-    button.style.flex = '1';
+    button.style.flex = value === '=' ? '2' : '1';
     button.style.padding = '20px';
     button.style.fontSize = '20px';
     button.style.border = 'none';
-    button.style.background = '#e6e6e6';
+    button.style.background = value === '=' ? '#ff9900' : '#e6e6e6';
+    button.style.color = value === '=' ? '#fff' : '#000';
     button.style.cursor = 'pointer';
     button.addEventListener('click', () => handleButtonClick(value));
     row.appendChild(button);
@@ -61,64 +64,55 @@ buttonValues.forEach(rowValues => {
   calculatorContainer.appendChild(row);
 });
 
-// Create dark mode toggle button
-const darkModeButton = document.createElement('button');
-darkModeButton.textContent = 'Dark Mode';
-darkModeButton.style.width = '100%';
-darkModeButton.style.padding = '10px';
-darkModeButton.style.marginTop = '20px';
-darkModeButton.style.fontSize = '16px';
-darkModeButton.style.background = '#1a1a1a';
-darkModeButton.style.color = '#fff';
-darkModeButton.style.border = 'none';
-darkModeButton.style.borderRadius = '5px';
-darkModeButton.style.cursor = 'pointer';
-darkModeButton.addEventListener('click', toggleDarkMode);
-calculatorContainer.appendChild(darkModeButton);
-
-// Toggle dark mode
-function toggleDarkMode() {
-  const calculator = document.querySelector('.calculator');
-
-  if (calculator.classList.contains('dark-mode')) {
-    calculator.classList.remove('dark-mode');
-    darkModeButton.textContent = 'Dark Mode';
-    darkModeButton.style.background = '#1a1a1a';
-    darkModeButton.style.color = '#fff';
-  } else {
-    calculator.classList.add('dark-mode');
-    darkModeButton.textContent = 'Light Mode';
-    darkModeButton.style.background = '#fff';
-    darkModeButton.style.color = '#000';
-  }
-}
+// Memory variable
+let memory = 0;
 
 // Handle button click
 function handleButtonClick(value) {
-    if (value === 'Clear') {
-      displayInput.value = '';
-    } else if (value === '=') {
-      try {
-        displayInput.value = eval(displayInput.value);
-      } catch (error) {
-        displayInput.value = 'Error';
-      }
-    } else {
-      displayInput.value += value;
+  if (value === 'Clear') {
+    displayInput.value = '';
+  } else if (value === '=') {
+    try {
+      displayInput.value = eval(displayInput.value);
+    } catch (error) {
+      displayInput.value = 'Error';
     }
+  } else if (value === '√') {
+    displayInput.value = Math.sqrt(parseFloat(displayInput.value));
+  } else if (value === 'x^2') {
+    displayInput.value = parseFloat(displayInput.value) ** 2;
+  } else if (value === 'MR') {
+    displayInput.value = memory;
+  } else if (value === 'M+') {
+    memory += parseFloat(displayInput.value);
+  } else if (value === 'M-') {
+    memory -= parseFloat(displayInput.value);
+  } else if (value === 'MC') {
+    memory = 0;
+  } else if (value === 'sin') {
+    displayInput.value = Math.sin(parseFloat(displayInput.value));
+  } else if (value === 'cos') {
+    displayInput.value = Math.cos(parseFloat(displayInput.value));
+  } else if (value === 'tan') {
+    displayInput.value = Math.tan(parseFloat(displayInput.value));
+  } else if (value === 'x^n') {
+    const base = parseFloat(displayInput.value);
+    const power = prompt('Enter the power:');
+    displayInput.value = base ** parseFloat(power);
+  } else {
+    displayInput.value += value;
   }
-  
-  // Handle keyboard input
-  document.addEventListener('keydown', event => {
-    const key = event.key;
-    if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === 'Enter') {
-      handleButtonClick(key === 'Enter' ? '=' : key);
-    } else if (key === 'Backspace') {
-      displayInput.value = displayInput.value.slice(0, -1);
-    }
-  });
-  
+}
 
+// Handle keyboard input
+document.addEventListener('keydown', event => {
+  const key = event.key;
+  if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === 'Enter') {
+    handleButtonClick(key === 'Enter' ? '=' : key);
+  } else if (key === 'Backspace') {
+    displayInput.value = displayInput.value.slice(0, -1);
+  }
+});
 
     </script>
 </body>
