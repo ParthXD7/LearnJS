@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<h1>Javascript is fun:- </h1>
+<body style="background-color:antiquewhite">
+    <div class="weeks">
+    <div class="days">Monday</div>
+    <div class="days">Tuesday</div>
+    <div class="days">Wednesday</div>
+    </div>
+    <script>
+        const heading = document.createElement("h1")
+        heading.id="title"
+        heading.className="heads"
+        const text = document.createTextNode("JavaScript is Fun:")
+        heading.appendChild(text)
+        document.body.appendChild(heading)
+        var week = document.querySelector(".weeks")
+       // console.log(week)
+        console.log(week.children[0])
+        console.log(week.children[2].innerHTML)
+        //console.log(week.firstElementChild)
+        const dY = document.querySelector(".days")
+        console.log(dY.nextElementSibling)
+    </script>
+</body>
+</html>

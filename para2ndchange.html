@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .highlighted {
+        color: red;
+    }
+</style>
+<body>
+    <body style="background-color:antiquewhite">
+<div class="Para"> 
+   <p id="xd"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis aperiam 
+        placeat fugit quidem nihil cupiditate provident distinctio, nemo non maxime 
+        nisi sequi id aspernatur repudiandae deserunt pariatur rerum debitis veritatis? 
+        Debitis veritatis, mollitia facilis illum magnam est minima iure beatae a veniam
+         itaque doloribus numquam harum impedit quas ipsa ipsam?</p>
+</div>
+      
+        <script>
+            const paragraph = document.getElementById('xd');
+            const words = paragraph.textContent.split(' ');
+            
+            if (words.length > 2) {
+                words[2] = `<span class="highlighted">${words[2]}</span>`;
+                paragraph.innerHTML = words.join(' ');
+            }
+        </script>
+</body>
+</html>

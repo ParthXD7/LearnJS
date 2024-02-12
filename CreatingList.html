@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <u1 class="language">
+        <li>JavaScript</li>
+    </u1>
+    <script>
+        const userInput = prompt("Enter a Programming Laguage:");
+        function addlang(langName){
+            const li = document.createElement('li')
+            li.appendChild(document.createTextNode(langName))
+            document.querySelector('.language').appendChild((li))
+            console.log(li)
+        }
+        addlang("Python")
+        addlang("C++")
+        addlang("Typescript")
+        addlang(userInput)
+        const lang2 = document.querySelector("li:nth-child(1)")
+        const newli = document.createElement("li")
+        newli.textContent= "Ruby"
+        lang2.replaceWith(newli)
+    </script>
+</body>
+</html>
