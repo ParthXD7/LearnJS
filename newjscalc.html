@@ -6,6 +6,13 @@
 </head>
 <body>
   <script>
+// Create name display
+const nameDisplay = document.createElement('div');
+nameDisplay.textContent = 'Calculator made by Parth';
+nameDisplay.style.textAlign = 'center';
+nameDisplay.style.marginBottom = '20px';
+document.body.appendChild(nameDisplay);
+
   // Create calculator container
 const calculatorContainer = document.createElement('div');
 calculatorContainer.classList.add('calculator');
