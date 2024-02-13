@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <script>
+  // Create calculator container
+const calculatorContainer = document.createElement('div');
+calculatorContainer.classList.add('calculator');
+calculatorContainer.style.width = '320px';
+calculatorContainer.style.margin = '50px auto';
+calculatorContainer.style.border = '2px solid #ccc';
+calculatorContainer.style.borderRadius = '10px';
+calculatorContainer.style.backgroundColor = '#f3f3f3';
+calculatorContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+document.body.appendChild(calculatorContainer);
+
+// Create display input
+const displayInput = document.createElement('input');
+displayInput.setAttribute('type', 'text');
+displayInput.setAttribute('id', 'display');
+displayInput.setAttribute('disabled', 'true');
+displayInput.style.width = '100%';
+displayInput.style.height = '60px';
+displayInput.style.padding = '10px';
+displayInput.style.fontSize = '24px';
+displayInput.style.border = 'none';
+displayInput.style.borderBottom = '2px solid #ccc';
+displayInput.style.backgroundColor = '#fff';
+displayInput.style.textAlign = 'right';
+calculatorContainer.appendChild(displayInput);
+
+// Button values
+const buttonValues = [
+  ['7', '8', '9', '/'],
+  ['4', '5', '6', '*'],
+  ['1', '2', '3', '-'],
+  ['0', '.', '=', '+'],
+  ['Clear']
+];
+
+// Create buttons
+buttonValues.forEach(rowValues => {
+  const row = document.createElement('div');
+  row.style.display = 'flex';
+  rowValues.forEach(value => {
+    const button = document.createElement('input');
+    button.setAttribute('type', 'button');
+    button.setAttribute('value', value);
+    button.style.flex = value === '=' ? '2' : '1';
+    button.style.padding = '20px';
+    button.style.fontSize = '20px';
+    button.style.border = 'none';
+    button.style.background = value === '=' ? '#ff9900' : '#e6e6e6';
+    button.style.color = value === '=' ? '#fff' : '#000';
+    button.style.cursor = 'pointer';
+    button.addEventListener('click', () => handleButtonClick(value));
+    row.appendChild(button);
+  });
+  calculatorContainer.appendChild(row);
+});
+
+// Memory variable
+let memory = 0;
+
+// Handle button click
+function handleButtonClick(value) {
+  if (value === 'Clear') {
+    displayInput.value = '';
+  } else if (value === '=') {
+    try {
+      displayInput.value = eval(displayInput.value);
+    } catch (error) {
+      displayInput.value = 'Error';
+    }
+  } else {
+    displayInput.value += value;
+  }
+}
+
+// Handle keyboard input
+document.addEventListener('keydown', event => {
+  const key = event.key;
+  if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === 'Enter') {
+    handleButtonClick(key === 'Enter' ? '=' : key);
+  } else if (key === 'Backspace') {
+    displayInput.value = displayInput.value.slice(0, -1);
+  }
+});
+
+    </script>
+</body>
+</html>
