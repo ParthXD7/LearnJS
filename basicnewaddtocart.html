@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+ // Create products data
+const products = [
+  { id: 1, name: 'Product 1', price: 10, image: 'https://cdn.discordapp.com/attachments/817827801695649812/1181338614421008445/OIG.jpg?ex=65dcfb51&is=65ca8651&hm=14823d2af6632b5c418067cd8f97e518e8c321ac9fb75296d26fff8a90a10ee7&' },
+  { id: 2, name: 'Product 2', price: 20, image: 'product2.jpg' },
+  { id: 3, name: 'Product 3', price: 30, image: 'product3.jpg' },
+];
+
+// Initialize cart
+let cart = [];
+
+// Function to display products
+function displayProducts() {
+  const productList = document.createElement('ul');
+  productList.classList.add('product-list');
+
+  products.forEach(product => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('product-item');
+
+    const productImage = document.createElement('img');
+    productImage.src = product.image;
+    productImage.alt = product.name;
+    productImage.classList.add('product-image');
+
+    const productName = document.createElement('span');
+    productName.textContent = product.name;
+    productName.classList.add('product-name');
+
+    const productPrice = document.createElement('span');
+    productPrice.textContent = `$${product.price}`;
+    productPrice.classList.add('product-price');
+
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Add to Cart';
+    addButton.classList.add('add-button');
+    addButton.addEventListener('click', () => addToCart(product));
+
+    listItem.appendChild(productImage);
+    listItem.appendChild(productName);
+    listItem.appendChild(productPrice);
+    listItem.appendChild(addButton);
+    productList.appendChild(listItem);
+  });
+
+  document.body.appendChild(productList);
+}
+
+// Function to add product to cart
+function addToCart(product) {
+  cart.push(product);
+  updateCart();
+}
+
+// Function to remove product from cart
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+// Function to update cart display
+function updateCart() {
+  const cartContainer = document.getElementById('cart');
+  cartContainer.innerHTML = '';
+
+  cart.forEach((product, index) => {
+    const cartItem = document.createElement('div');
+    cartItem.classList.add('cart-item');
+
+    const productName = document.createElement('span');
+    productName.textContent = product.name;
+    productName.classList.add('cart-item-name');
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('remove-button');
+    removeButton.addEventListener('click', () => removeFromCart(index));
+
+    cartItem.appendChild(productName);
+    cartItem.appendChild(removeButton);
+    cartContainer.appendChild(cartItem);
+  });
+
+  const totalItems = document.getElementById('total-items');
+  totalItems.textContent = `Total Items: ${cart.length}`;
+
+  const totalPrice = document.getElementById('total-price');
+  const totalPriceValue = cart.reduce((total, product) => total + product.price, 0);
+  totalPrice.textContent = `Total Price: $${totalPriceValue}`;
+}
+
+// Initialize the webpage
+window.onload = function() {
+  displayProducts();
+  const cartContainer = document.createElement('div');
+  cartContainer.id = 'cart';
+  cartContainer.classList.add('cart');
+  document.body.appendChild(cartContainer);
+  const totalItems = document.createElement('div');
+  totalItems.id = 'total-items';
+  totalItems.classList.add('total-items');
+  document.body.appendChild(totalItems);
+  const totalPrice = document.createElement('div');
+  totalPrice.id = 'total-price';
+  totalPrice.classList.add('total-price');
+  document.body.appendChild(totalPrice);
+};
+
+    </script>
+</body>
+</html>

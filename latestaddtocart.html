@@ -1,0 +1,180 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+ // Create products data
+const products = [
+  { id: 1, name: 'Product 1', price: 10, image: 'product1.jpg' },
+  { id: 2, name: 'Product 2', price: 20, image: 'product2.jpg' },
+  { id: 3, name: 'Product 3', price: 30, image: 'product3.jpg' },
+];
+
+// Initialize cart
+let cart = [];
+
+// Function to create a product element with styling
+function createProductElement(product) {
+  const listItem = document.createElement('div');
+  listItem.style.border = '4px solid #ccc';
+  listItem.style.borderRadius = '5px';
+  listItem.style.margin = '10px';
+  listItem.style.padding = '10px';
+  listItem.style.width = '200px';
+  listItem.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.4)';
+  listItem.style.textAlign = 'center';
+
+  const productImage = document.createElement('img');
+  productImage.src = product.image;
+  productImage.alt = product.name;
+  productImage.style.width = '100px';
+  productImage.style.height = '100px';
+  productImage.style.boxShadow = '0 8px 10px rgba(0, 0, 0, 0.2)';
+  productImage.style.marginBottom = '10px';
+
+  const productName = document.createElement('span');
+  productName.textContent = product.name;
+  productName.style.display = 'block';
+  productName.style.marginBottom = '5px';
+
+  const productPrice = document.createElement('span');
+  productPrice.textContent = `$${product.price}`;
+  productPrice.style.display = 'block';
+  productPrice.style.fontWeight = 'bold';
+  productPrice.style.color = '#333';
+
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add to Cart';
+  addButton.style.backgroundColor = '#4caf50';
+  addButton.style.color = 'white';
+  addButton.style.border = 'none';
+  addButton.style.padding = '8px 16px';
+  addButton.style.textAlign = 'center';
+  addButton.style.textDecoration = 'none';
+  addButton.style.display = 'inline-block';
+  addButton.style.fontSize = '14px';
+  addButton.style.marginTop = '5px';
+  addButton.style.cursor = 'pointer';
+  addButton.style.borderRadius = '4px';
+  addButton.addEventListener('click', () => addToCart(product));
+
+  listItem.appendChild(productImage);
+  listItem.appendChild(productName);
+  listItem.appendChild(productPrice);
+  listItem.appendChild(addButton);
+
+  return listItem;
+}
+
+// Function to display products
+function displayProducts() {
+  const productList = document.createElement('div');
+  productList.style.display = 'flex';
+  productList.style.flexWrap = 'wrap';
+  productList.style.padding = '20px';
+
+  products.forEach(product => {
+    const productElement = createProductElement(product);
+    productList.appendChild(productElement);
+  });
+
+  document.body.appendChild(productList);
+}
+
+// Function to add product to cart
+function addToCart(product) {
+  cart.push(product);
+  updateCart();
+}
+
+// Function to remove product from cart
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+// Function to update cart display
+function updateCart() {
+  const cartContainer = document.getElementById('cart');
+  cartContainer.innerHTML = '';
+
+  cart.forEach((product, index) => {
+    const cartItem = document.createElement('div');
+    cartItem.style.marginBottom = '5px';
+    cartItem.style.display = 'flex';
+    cartItem.style.justifyContent = 'space-between';
+    cartItem.style.alignItems = 'center';
+
+    const productName = document.createElement('span');
+    productName.textContent = product.name;
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.style.backgroundColor = '#f44336';
+    removeButton.style.color = 'white';
+    removeButton.style.border = 'none';
+    removeButton.style.padding = '8px 16px';
+    removeButton.style.textAlign = 'center';
+    removeButton.style.textDecoration = 'none';
+    removeButton.style.fontSize = '14px';
+    removeButton.style.cursor = 'pointer';
+    removeButton.style.borderRadius = '4px';
+    removeButton.addEventListener('click', () => removeFromCart(index));
+
+    cartItem.appendChild(productName);
+    cartItem.appendChild(removeButton);
+    cartContainer.appendChild(cartItem);
+  });
+
+  const totalItems = document.getElementById('total-items');
+  totalItems.textContent = `Total Items: ${cart.length}`;
+
+  const totalPrice = document.getElementById('total-price');
+  const totalPriceValue = cart.reduce((total, product) => total + product.price, 0);
+  totalPrice.textContent = `Total Price: $${totalPriceValue}`;
+}
+
+// Initialize the webpage
+window.onload = function() {
+  // Add heading for products
+  const productsHeading = document.createElement('h2');
+  productsHeading.textContent = 'Products';
+  document.body.appendChild(productsHeading);
+
+  // Display products
+  displayProducts();
+
+  // Add heading for cart
+  const cartHeading = document.createElement('h2');
+  cartHeading.textContent = 'Shopping Cart';
+  document.body.appendChild(cartHeading);
+
+  // Create cart container
+  const cartContainer = document.createElement('div');
+  cartContainer.id = 'cart';
+  cartContainer.style.padding = '20px';
+  cartContainer.style.border = '1px solid #ccc';
+  document.body.appendChild(cartContainer);
+
+  // Add total items heading
+  const totalItemsHeading = document.createElement('h3');
+  totalItemsHeading.id = 'total-items';
+  totalItemsHeading.textContent = 'Total Items: 0';
+  totalItemsHeading.style.marginTop = '10px';
+  document.body.appendChild(totalItemsHeading);
+
+  // Add total price heading
+  const totalPriceHeading = document.createElement('h3');
+  totalPriceHeading.id = 'total-price';
+  totalPriceHeading.textContent = 'Total Price: $0';
+  totalPriceHeading.style.marginTop = '10px';
+  document.body.appendChild(totalPriceHeading);
+};
+
+
+    </script>
+</body>
+</html>
