@@ -6,13 +6,6 @@
 </head>
 <body>
   <script>
-// Create name display
-const nameDisplay = document.createElement('div');
-nameDisplay.textContent = 'Calculator made by Parth';
-nameDisplay.style.textAlign = 'center';
-nameDisplay.style.marginBottom = '20px';
-document.body.appendChild(nameDisplay);
-
   // Create calculator container
 const calculatorContainer = document.createElement('div');
 calculatorContainer.classList.add('calculator');
@@ -75,14 +68,25 @@ buttonValues.forEach(rowValues => {
 let memory = 0;
 
 // Handle button click
+// Handle button click
 function handleButtonClick(value) {
   if (value === 'Clear') {
     displayInput.value = '';
   } else if (value === '=') {
     try {
-      displayInput.value = eval(displayInput.value);
+      // Check for division by zero
+      if (displayInput.value.includes('/0')) {
+        throw new Error('Division by zero');
+      }
+      // Use eval to evaluate the expression
+      const result = eval(displayInput.value);
+      displayInput.value = result;
     } catch (error) {
-      displayInput.value = 'Error';
+      if (error.message === 'Division by zero') {
+        displayInput.value = 'Error: Division by zero';
+      } else {
+        displayInput.value = 'Error';
+      }
     }
   } else if (value === '√') {
     displayInput.value = Math.sqrt(parseFloat(displayInput.value));
@@ -110,6 +114,7 @@ function handleButtonClick(value) {
     displayInput.value += value;
   }
 }
+
 
 // Handle keyboard input
 document.addEventListener('keydown', event => {
